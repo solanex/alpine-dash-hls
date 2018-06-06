@@ -67,7 +67,7 @@ ffmpeg -y -v error -i "${input_file}" -r 1/${thumbnail_timewindow} -vf scale=-1:
 rm -f "output/${filename}/thumbnails/thumbnail01.png";
 
 cd "output/${filename}/thumbnails";
-# writing thumbnail image names into file
+# Write thumbnail image names into file
 ls *.png > thumbnails.tmp;
 
 first_image="";
@@ -99,7 +99,7 @@ done < thumbnails.tmp
 echo -e "Thumbnail count: ${thumbnail_counter}";
 mv thumbnails.vtt thumbnails.tmp;
 
-# inserting matching WEBVTT timestamps for the preview images
+# Insert matching WEBVTT timestamps for the preview images
 while read line
 do
   h1=$(( n / 3600 ));

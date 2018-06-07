@@ -9,7 +9,7 @@ frames=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of
 # make folders
 echo -e "\nCurrent video: ${input_file}\nDetected file name: ${filename}\nTotal # of frames: ${frames}" && mkdir -p "output/${filename}/thumbnails" && \
 
-# Create Video Preview thumbnails (1/10 seconds)
+# Create Video Preview thumbnails
 /bin/webvtt.sh "${input_file}";
 
 # Create Video Poster (from second 3)

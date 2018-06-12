@@ -9,13 +9,6 @@ frames=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of
 # make folders
 echo -e "\nCurrent video: ${input_file}\nDetected file name: ${filename}\nTotal # of frames: ${frames}" && mkdir -p "output/${filename}/thumbnails" && \
 
-# Create Video Preview thumbnails
-/bin/webvtt.sh "${input_file}";
-
-# Create Video Poster (from second 3)
-echo -e "\nCreating Video Poster (from second 3)" && \
-ffmpeg -y -v error -i "${input_file}" -ss 00:00:03 -vframes 1 -vcodec png "output/${filename}/thumbnails/poster.png";
-
 echo -e "\nCreating MPEG-DASH files" && \
 # 1080p@CRF22
 echo -e "Total # of frames: ${frames}\n\nCreating Full HD version (no upscaling, Step 1/4)" && \
@@ -52,16 +45,6 @@ xsltproc --stringparam run_id "segment" /app/mpd-to-m3u8/mpd_to_hls.xsl "output/
 # Cleanup
 echo -e "\nCleanup of intermediary files" && \
 rm "output/${filename}/intermed_1080p.mp4" "output/${filename}/intermed_720p.mp4" "output/${filename}/intermed_480p.mp4" "output/${filename}/audio_128k.m4a";
-
-# Add HTML code for easy inclusion in website
-
-echo -e "\nAdd HTML files for playback to output folder"
-cp /app/src/htaccess "output/${filename}/.htaccess"
-cp /app/src/index.html "output/${filename}/index.html"
-cp /app/src/plyr.html "output/${filename}/plyr.html"
-cp /app/src/fluid-player.html "output/${filename}/fluid-player.html"
-cp /app/src/videogular.html "output/${filename}/videogular.html"
-cp /app/src/videojs-vhs.html "output/${filename}/videojs-vhs.html"
 
 # Set permissions for newly created files and folders matching the video file's permissions
 echo -e "\nSetting permissions for all created files and folders & finishing";
